@@ -55,7 +55,7 @@ def save_report(df, output_path="report.md"):
     print("Report saved.")
 
 if __name__ == "__main__":
-    csv_file = os.path.join(os.path.dirname(__file__), "data/products.csv")
+    csv_file = "C:/Users/Kmger/OneDrive/Bureau/karenina/10eqs-data-analysis/data/products.csv"
     df = load_data(csv_file)
     external_data = fetch_external_data()
     insights = generate_insight(df, external_data)
