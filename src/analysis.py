@@ -49,7 +49,7 @@ def save_report(df, output_path="report.md"):
     with open(output_path, "w") as f:
         f.write("# Data Analysis Report\n\n")
         f.write("## Pricing Insights\n\n")
-        f.write(df.to_markdown(index=False))
+        f.write(df.to_string(index=False))
         f.write("\n\n## Recommendations\n\n")
         f.write("Consider adjusting pricing based on market trends.")
     print("Report saved.")
