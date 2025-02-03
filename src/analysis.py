@@ -17,7 +17,12 @@ def fetch_external_data():
     try:
         response = requests.get("https://dummyjson.com/products")  # Placeholder API
         if response.status_code == 200:
-            return response.json()
+            data = response.json()
+            if "products" in data and isinstance(data["products"], list):
+                return [{"title": item.get("title", "Unknown"), "price": item.get("price", 0)} for item in data["products"]]
+            else:
+                print("Invalid data format in external API response.")
+                return None
         else:
             print("Failed to fetch external data.")
             return None
@@ -32,7 +37,7 @@ def generate_insight(df, external_data):
         return None
     
     df['external_price'] = df['our_price'] * 1.1  # Example: External price is 10% higher
-    df['price_difference'] = df['external_price'] - df['our_price'] #Difference in prices
+    df['price_difference'] = df['external_price'] - df['our_price']
     
     return df[['product_name', 'our_price', 'external_price', 'price_difference']]
 
