@@ -15,16 +15,13 @@ def load_data(csv_path: str) -> pd.DataFrame:
     """
     try:
         df = pd.read_csv(csv_path)
-
         # Clean the dataframe using our helper function
         df = clean_dataframe(df)
         print("Data loaded and cleaned successfully.")
-
         # Check for missing values
         missing = check_missing_values(df)
         if missing:
             print("Warning: Missing values found in columns:", missing)
-
         # Print a quick summary of the data
         print(summarize_data(df))
 
@@ -71,10 +68,8 @@ def generate_insight(df: pd.DataFrame, external_data: list) -> pd.DataFrame:
     if df is None or external_data is None:
         print("Missing data. Cannot generate insight.")
         return None
-
     df["external_price"] = df["our_price"] * 1.1
     df["price_difference"] = df["external_price"] - df["our_price"]
-
     # Return columns of interest
     return df[["product_name", "our_price", "external_price", "price_difference"]]
 
@@ -96,15 +91,11 @@ def save_report(df: pd.DataFrame, output_path="report.md"):
 if __name__ == "__main__":
     # CSV path
     csv_file = "C:/Users/Kmger/OneDrive/Bureau/karenina/10eqs-data-analysis/data/products.csv"
-
     # 1. Load CSV Data
     df = load_data(csv_file)
-
     # 2. Fetch External Data
     external_data = fetch_external_data()
-
     # 3. Generate Insight
     insights = generate_insight(df, external_data)
-
     # 4. Save Report
     save_report(insights)
