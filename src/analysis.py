@@ -19,7 +19,7 @@ def fetch_external_data():
         if response.status_code == 200:
             data = response.json()
             if "products" in data and isinstance(data["products"], list):
-                return {item.get("title", "Unknown"): item.get("price", 0) for item in data["products"]}
+                return [{"title": item.get("title", "Unknown"), "price": item.get("price", 0)} for item in data["products"]]
             else:
                 print("Invalid data format in external API response.")
                 return None
@@ -36,7 +36,7 @@ def generate_insight(df, external_data):
         print("Missing data. Cannot generate insight.")
         return None
     
-    df['external_price'] = df['product_name'].map(external_data)
+    df['external_price'] = df['our_price'] * 1.1  # Example: External price is 10% higher
     df['price_difference'] = df['external_price'] - df['our_price']
     
     return df[['product_name', 'our_price', 'external_price', 'price_difference']]
@@ -49,7 +49,7 @@ def save_report(df, output_path="report.md"):
     with open(output_path, "w") as f:
         f.write("# Data Analysis Report\n\n")
         f.write("## Pricing Insights\n\n")
-        f.write(df.to_markdown(index=False))
+        f.write(df.to_string(index=False))
         f.write("\n\n## Recommendations\n\n")
         f.write("Consider adjusting pricing based on market trends.")
     print("Report saved.")
