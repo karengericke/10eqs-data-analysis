@@ -26,7 +26,7 @@ def fetch_external_data(api_url):
         return None
 
 def clean_data(df):
-    """Performs basic data cleaning such as handling missing values."""
+    """Performs basic data cleaning (handling missing values)"""
     if df is None:
         return None
     
