@@ -1,6 +1,5 @@
 import pandas as pd
 import requests
-import os
 
 def load_data(csv_path):
     """Loads the product data from a CSV file."""

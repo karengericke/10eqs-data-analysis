@@ -1,6 +1,5 @@
 import pandas as pd
 import requests
-import os
 
 # Load and process CSV data
 def load_data(csv_path):
