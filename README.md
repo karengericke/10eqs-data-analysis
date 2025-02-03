@@ -27,12 +27,13 @@ This will:
 3. Compare internal vs. external pricing and generate insights.
 4. Save results to `report.md`.
 
-## Required API Keys/Credentials
-No API keys are required for the current external data source (`https://dummyjson.com/products`). If using a real-world API, ensure API keys are stored in a `.env` file and loaded securely.
+## API Keys/Credentials handling
+The current implementation integrates a public test API key for demonstration purposes. The selected external data source (https://dummyjson.com/products) does not require authentication, but the code is structured to handle API keys securely if needed.
+If integrating with a real-world API that requires authentication, API keys should be stored in a .env file and loaded securely using environment variables to prevent exposure in public repositories. The script automatically retrieves the key from the environment, defaulting to a public test key if none is provided.
 
 ## Approach
 1. **Data Ingestion**: Load internal product pricing from a CSV.
-2. **External Data Integration**: Fetch product pricing from an API.
+2. **External Data Integration**: Fetch product pricing from an "API".
 3. **Data Cleaning & Processing**: Normalize and clean product names.
 4. **Price Comparison**: Calculate the difference between internal and external prices.
 5. **Reporting**: Save insights into a structured markdown file.
@@ -41,8 +42,7 @@ No API keys are required for the current external data source (`https://dummyjso
 - **Dummy Data Source**: Since this project is developed as part of a challenge, it retrieves information from a placeholder API. This may limit the depth of insights and the accuracy of recommendations, as the external data does not reflect real-world market conditions.
 - **Product Name Mismatch**: If external product names differ significantly, matching accuracy may be reduced.
 - **API Data Variability**: External pricing may change over time, affecting analysis consistency.
-- **Assumption on Price Calculation**: External pricing is assumed to be correct but may have inaccuracies.
-- **Performance Consideration**: For larger datasets, fuzzy matching can slow down execution.
+- **Performance Consideration**: If datasets grow larger, enhancements may be needed to optimize data processing and improve execution efficiency.
 
 ## Time Spent on Each Component
 | Component                     | Time Spent |
@@ -51,14 +51,19 @@ No API keys are required for the current external data source (`https://dummyjso
 | Data Cleaning & Preprocessing | 35 min     |
 | Price Comparison & Insights   | 30 min     |
 | Report Generation             | 15 min     |
+| Adding API KEY feature        | 15 min     |
 | Debugging & Testing           | 50 min     |
 | CSV as an argument            | 15 min     |
 | Documentation & README        | 30 min     |
 | **Total**                     | **3 hrs**  |
 *Aproximated times
 
-## Future Enhancements
-- API integration
+## Future Possible Enhancements
+- **Improved Price Comparison:** Enhance the external price comparison by integrating real-time pricing data from multiple sources instead of using a fixed multiplier (This will allow for more accurate competitive analysis and better pricing strategies.)
+- **Expanded API Integration:** Explore additional data sources, such as e-commerce platforms (e.g., Amazon, eBay, Walmart APIs), to gather real-time market prices and trends.
+- **Dynamic Insights & Alerts:** Implement automatic alerts when significant price gaps are detected, helping businesses optimize their pricing strategies dynamically.
+- **Data Visualization:** Add interactive charts and dashboards to make pricing trends more accessible and actionable for business owners.
+- **Historical Price Analysis:** Store and analyze historical price data to identify trends and predict future pricing fluctuations.
 
 ---
 Developed as part of the 10EQS Technical Evaluation Challenge 🚀
