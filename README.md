@@ -46,14 +46,16 @@ No API keys are required for the current external data source (`https://dummyjso
 
 ## Time Spent on Each Component
 | Component                     | Time Spent |
-|--------------------------------|------------|
+|-------------------------------|------------|
 | CSV Data Handling             | 10 min     |
 | Data Cleaning & Preprocessing | 35 min     |
 | Price Comparison & Insights   | 30 min     |
 | Report Generation             | 15 min     |
 | Debugging & Testing           | 50 min     |
-| Documentation & README        | 20 min     |
+| CSV as an argument            | 15 min     |
+| Documentation & README        | 30 min     |
 | **Total**                     | **3 hrs**  |
+*Aproximated times
 
 ## Future Enhancements
 - API integration

@@ -1,4 +1,5 @@
 import os
+import sys
 import pandas as pd
 import requests
 from dotenv import load_dotenv
@@ -99,8 +100,14 @@ def save_report(df: pd.DataFrame, output_path="report.md"):
     print(f"Report saved to {output_path}.")
 
 if __name__ == "__main__":
-    # CSV path
-    csv_file = "C:/Users/Kmger/OneDrive/Bureau/karenina/10eqs-data-analysis/data/products.csv"
+    # CSV path as an argument
+    if len(sys.argv) > 1:
+        csv_file = sys.argv[1]
+    else:
+        # Default path if none is provided
+        csv_file = "C:/Users/Kmger/OneDrive/Bureau/karenina/10eqs-data-analysis/data/products.csv"
+        print(f"No CSV path provided. Using default: {csv_file}")
+
     # 1. Load CSV data
     df = load_data(csv_file)
     # 2. Fetc external data
