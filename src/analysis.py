@@ -32,7 +32,7 @@ def generate_insight(df, external_data):
         return None
     
     df['external_price'] = df['our_price'] * 1.1  # Example: External price is 10% higher
-    df['price_difference'] = df['external_price'] - df['our_price']
+    df['price_difference'] = df['external_price'] - df['our_price'] #Difference in prices
     
     return df[['product_name', 'our_price', 'external_price', 'price_difference']]
 
@@ -50,7 +50,7 @@ def save_report(df, output_path="report.md"):
     print("Report saved.")
 
 if __name__ == "__main__":
-    csv_file = "data/products.csv"  # Placeholder path
+    csv_file = "data/products.csv"
     df = load_data(csv_file)
     external_data = fetch_external_data()
     insights = generate_insight(df, external_data)
