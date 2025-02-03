@@ -1,7 +1,8 @@
+import os
 import pandas as pd
 import requests
+from dotenv import load_dotenv
 
-# Import helper functions from utils
 from utils import (
     clean_dataframe,
     check_missing_values,
@@ -15,7 +16,7 @@ def load_data(csv_path: str) -> pd.DataFrame:
     """
     try:
         df = pd.read_csv(csv_path)
-        # Clean the dataframe using our helper function
+        # Clean the dataframe
         df = clean_dataframe(df)
         print("Data loaded and cleaned successfully.")
         # Check for missing values
@@ -24,7 +25,6 @@ def load_data(csv_path: str) -> pd.DataFrame:
             print("Warning: Missing values found in columns:", missing)
         # Print a quick summary of the data
         print(summarize_data(df))
-
         return df
     except Exception as e:
         print(f"Error loading data: {e}")
@@ -32,19 +32,28 @@ def load_data(csv_path: str) -> pd.DataFrame:
 
 def fetch_external_data() -> list:
     """
-    Fetches external pricing data (dummy example) 
-    from a public API (https://dummyjson.com).
+    Fetches external pricing data from a public API (dummy example).
     """
     try:
-        response = requests.get("https://dummyjson.com/products")
+        # Load environment variables from .env
+        load_dotenv()
+        # Retrieve API key from environment (default to a public test key)
+        api_key = os.getenv("API_KEY", "PUBLIC_TEST_KEY")
+        # Construct request headers
+        headers = {
+            # Example of embedding a key
+            "Authorization": f"Bearer {api_key}"
+        }
+
+        # Make the request
+        response = requests.get("https://dummyjson.com/products", headers=headers)
+        
         if response.status_code == 200:
             api_data = response.json()
-
-            # Check if the 'products' key is present and valid
-            if 'products' in api_data:
-                products = api_data['products']
+            if "products" in api_data:
+                products = api_data["products"]
                 if validate_response_data(products):
-                    # Convert data to a list of dictionaries with relevant fields
+                    # Convert data to a list of simpler dicts
                     return [
                         {
                             "title": item.get("title", "Unknown"),
@@ -63,14 +72,15 @@ def fetch_external_data() -> list:
 
 def generate_insight(df: pd.DataFrame, external_data: list) -> pd.DataFrame:
     """
-    Generates an insight by comparing our price to external price data.
+    Generates an insight by comparing our price to a (mock) external price.
     """
     if df is None or external_data is None:
         print("Missing data. Cannot generate insight.")
         return None
+    # Pretend comparison wiht our price to a 'market price' 
     df["external_price"] = df["our_price"] * 1.1
     df["price_difference"] = df["external_price"] - df["our_price"]
-    # Return columns of interest
+
     return df[["product_name", "our_price", "external_price", "price_difference"]]
 
 def save_report(df: pd.DataFrame, output_path="report.md"):
@@ -91,11 +101,11 @@ def save_report(df: pd.DataFrame, output_path="report.md"):
 if __name__ == "__main__":
     # CSV path
     csv_file = "C:/Users/Kmger/OneDrive/Bureau/karenina/10eqs-data-analysis/data/products.csv"
-    # 1. Load CSV Data
+    # 1. Load CSV data
     df = load_data(csv_file)
-    # 2. Fetch External Data
+    # 2. Fetc external data
     external_data = fetch_external_data()
-    # 3. Generate Insight
+    # 3. Generate insights
     insights = generate_insight(df, external_data)
-    # 4. Save Report
+    # 4. Save the report
     save_report(insights)
